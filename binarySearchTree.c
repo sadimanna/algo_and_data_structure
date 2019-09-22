@@ -5,7 +5,6 @@
 
 #define MAX_FILENAME_LEN 50
 #define MAX_CMD_LEN 100
-#define MAX_SUBTREE_LEN 20
 
 struct node
 {
@@ -51,7 +50,6 @@ void visualize_tree(struct node *);
 
 int main()
 {
-	printf("\n\n How you doin'? \n");
 	printf("\n Program for BINARY SEARCH TREE \n\n");
 	int option, val;
 	//char filename[MAX_FILENAME_LEN], cmd[MAX_CMD_LEN];
