@@ -1,10 +1,15 @@
-/*This code uses Graphviz for visualization
+/*
+AUTHOR : SILADITTYA MANNA
+DATE: 06-02-2020
+
+This code uses Graphviz for visualization
 Install Graphviz from 
 https://graphviz.gitlab.io/_pages/Download/Download_windows.html
 before running this code
 and add C:\Program Files (x86)\Graphviz2.38\bin to PATH
 OR
-Comment out the lines invcluding Graphviz commands or any call to Graphviz*/
+Comment out the lines with Graphviz commands or any call to Graphviz
+*/
 
 
 #include <stdio.h>
@@ -15,13 +20,14 @@ void main(int argc, char *argv[])
 	int numNodes = atoi(argv[1]);
 	int i=0, j=0, snode;
 	int *adjArr = (int *)malloc(numNodes*numNodes*sizeof(int));
+
 	printf("\nNumber of nodes in the Graph :: %d\n",numNodes);
 	printf("\nEnter the Adjacency matrix :: \n");
 	for (i=0;i<numNodes;i++)
 	{
 		for(j=0;j<numNodes;j++)
 		{
-			//printf("%d %d\n",i,j);
+			printf("Enter value for position [%d][%d]\n",i+1,j+1);
 			scanf("%d", &adjArr[i*numNodes+j]);
 		}
 	}
@@ -39,8 +45,8 @@ void main(int argc, char *argv[])
 		printf("\n");
 	}
 
-	//VISUALIZATION
-	FILE *graph, *bfstree;
+	//------------------------------------------VISUALIZATION
+	FILE *graph;
 	graph = fopen("graph.dot","w");
 	if (graph==NULL)
 	{
@@ -75,7 +81,9 @@ void main(int argc, char *argv[])
 	
 	#endif
 	
-	//BUILDING BFS
+	//-------------------------------------BUILDING BFS
+	//-------------------------------------------------using QUEUE
+	FILE *bfstree;
 	bfstree = fopen("bfstree.dot","w");
 	if(bfstree==NULL)
 	{
