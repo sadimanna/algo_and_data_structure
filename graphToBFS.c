@@ -21,9 +21,9 @@ The BFS Tree is represented using the data structure as shown below
 				    __|
 				____|____    __________    _________
 	L1		       |___child_|--|_sibling__|--|_sibling_|----
-					|				 |	
-				   ____	|			      ___|____    _________    _________
-			       	|			             |_child__|--|_sibling_|--|_sibling_|----
+					|	 |	
+				   ____	|     ___|____    _________    _________
+			       	|	     |_child__|--|_sibling_|--|_sibling_|----
 		    	     ___|____    ___________
 	L2	   	    |_child__|--|__sibling__|----
 
