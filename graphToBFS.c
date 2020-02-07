@@ -15,17 +15,17 @@ Comment out the lines with Graphviz commands or any call to Graphviz
 
 The BFS Tree is represented using the data structure as shown below
 
-					______
+				    ______
 	L0			   |_ROOT_|
 				      |
 				    __|
 				____|____    __________    _________
-	L1		   |___child_|--|_sibling__|--|_sibling_|----
+	L1		       |___child_|--|_sibling__|--|_sibling_|----
 					|				 |	
-				____|			  ___|____    _________    _________
-			   |				 |_child__|--|_sibling_|--|_sibling_|----
-		    ___|____    ___________
-	L2	   |_child__|--|__sibling__|----
+				   ____	|			      ___|____    _________    _________
+			       	|			             |_child__|--|_sibling_|--|_sibling_|----
+		    	     ___|____    ___________
+	L2	   	    |_child__|--|__sibling__|----
 
 
 
