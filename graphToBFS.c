@@ -43,6 +43,16 @@ struct bfsnode
 
 void main(int argc, char *argv[])
 {
+
+	#ifdef _WIN32
+		#ifdef _WIN64
+			printf("\nInstall Graphviz from https://graphviz.gitlab.io/_pages/Download/Download_windows.html before running this code and add C:\\Program Files (x86)\\Graphviz2.38\\bin to PATH\n\n");
+		#endif
+	#else
+		printf("\nTo install Graphviz RUN 'sudo apt-get install graphviz' in TERMINAL before running this program\n\n");
+		//system("sudo apt-get install graphviz");
+	#endif
+
 	int numNodes = atoi(argv[1]);
 	int i=0, j=0, snode, tnode;
 	/*int *adjArr = (int *)malloc(numNodes*numNodes*sizeof(int));
@@ -59,6 +69,8 @@ void main(int argc, char *argv[])
 			adjArr[numNodes*i+j] = rowinput[j] - '0';
 	}*/
 
+	//Taking the graph given in Figure 3.2 of the book "Algorithm Design" as example
+	//To take custom input uncomment the previous part and commen this line
 	int adjArr[] = {1,1,1,0,0,0,0,0,1,1,1,1,1,0,0,0,1,1,1,0,1,0,1,1,0,1,0,1,1,0,0,0,0,1,1,1,1,1,0,0,0,0,0,0,1,1,0,0,0,0,1,0,0,0,1,1,0,0,1,0,0,0,1,1};
 
 	printf("\nAdjacency Matrix :: \n");
@@ -128,11 +140,11 @@ void main(int argc, char *argv[])
 	printf("\n");
 	scanf("%d",&snode);
 
-	printf("Enter target node : \nOptions are :: ");
+	/*printf("Enter target node : \nOptions are :: ");
 	for(i=0;i<numNodes;i++)
 		printf("[%d] ",i+1);
 	printf("\n");
-	scanf("%d",&tnode);
+	scanf("%d",&tnode);*/
 
 	int head=0,tail=0,v=0;
 
@@ -161,8 +173,6 @@ void main(int argc, char *argv[])
 				}
 				if(v!=1)
 				{
-					printf("%d ",i+1);
-
 					if(bfsTreeArr[head].child==NULL)
 						bfsTreeArr[head].child = &bfsTreeArr[tail];
 					
@@ -187,7 +197,6 @@ void main(int argc, char *argv[])
 			}*/
 		}
 		fflush(stdout);
-		printf("\n");
 		head++;
 	}
 
@@ -204,7 +213,8 @@ void main(int argc, char *argv[])
 
 	//-------------------------------------VISUALIZING IN TERMINAL
 	printf("\nPrinting BFS Tree\n\n");
-	
+	printf(" '|' separates children of different nodes or denotes end of a LEVEL\n");
+	printf(" '[-]' denotes the parent node has no children \n\n");
 	//---------------------Initialization
 	
 	head = 0;
