@@ -15,17 +15,17 @@ Comment out the lines with Graphviz commands or any call to Graphviz
 
 The BFS Tree is represented using the data structure as shown below
 
-				    ______
+					______
 	L0			   |_ROOT_|
 				      |
 				    __|
 				____|____    __________    _________
-	L1		       |___child_|--|_sibling__|--|_sibling_|----
-					|	 |	
-				   ____	|     ___|____    _________    _________
-			       	|	     |_child__|--|_sibling_|--|_sibling_|----
-		    	     ___|____    ___________
-	L2	   	    |_child__|--|__sibling__|----
+	L1		   |___child_|--|_sibling__|--|_sibling_|----
+					|				 |	
+				____|			  ___|____    _________    _________
+			   |				 |_child__|--|_sibling_|--|_sibling_|----
+		    ___|____    ___________
+	L2	   |_child__|--|__sibling__|----
 
 
 
@@ -45,7 +45,7 @@ void main(int argc, char *argv[])
 {
 	int numNodes = atoi(argv[1]);
 	int i=0, j=0, snode, tnode;
-	int *adjArr = (int *)malloc(numNodes*numNodes*sizeof(int));
+	/*int *adjArr = (int *)malloc(numNodes*numNodes*sizeof(int));
 	char *rowinput = (char *)malloc(numNodes*sizeof(char));
 
 	printf("\nNumber of nodes in the Graph :: %d\n",numNodes);
@@ -57,7 +57,9 @@ void main(int argc, char *argv[])
 		
 		for(j=0;j<numNodes;j++)
 			adjArr[numNodes*i+j] = rowinput[j] - '0';
-	}
+	}*/
+
+	int adjArr[] = {1,1,1,0,0,0,0,0,1,1,1,1,1,0,0,0,1,1,1,0,1,0,1,1,0,1,0,1,1,0,0,0,0,1,1,1,1,1,0,0,0,0,0,0,1,1,0,0,0,0,1,0,0,0,1,1,0,0,1,0,0,0,1,1};
 
 	printf("\nAdjacency Matrix :: \n");
 	printf("  ");
@@ -202,43 +204,73 @@ void main(int argc, char *argv[])
 
 	//-------------------------------------VISUALIZING IN TERMINAL
 	printf("\nPrinting BFS Tree\n\n");
-	i = 1;
-	j = 0;
-	struct bfsnode parent, *child, *sibling;
-	parent = bfsTreeArr[0];
-	child = parent.child;
-	sibling = parent.sibling;
-
-	//---------------------Initialization
-	printf("L%d : -%d-\n",j,parent.node);
-	printf("L%d : ",++j);
 	
+	//---------------------Initialization
+	
+	head = 0;
+	tail = 0;
+	int L = 0, Lchange = 1;
+	struct bfsnode *currNode,*tempnode,*tempnode2;
+
+	printf("L%d : ",L);
+	printf("-%d-\n",bfsTreeArr[head].node);
+	
+	tempnode = &bfsTreeArr[head];
 	//-------------------Loooooooooooooooooop
-	while(i<numNodes)
+	while(head < numNodes)
 	{
-		printf("-%d-",parent.child->node);
-		i++;
-		if(parent.child->sibling != NULL)
-			parent.child = parent.child->sibling;
+		if(Lchange==1)
+		{
+			L++;
+			printf("L%d : ",L);
+			Lchange=0;
+		}
+		if(tempnode->child != NULL)
+		{
+			printf("-%d-",tempnode->child->node);
+			tail++;
+			while(tempnode->child->sibling!=NULL)
+			{	
+				printf("-%d-",tempnode->child->sibling->node);
+				if(tempnode->child->sibling!=NULL)
+					tempnode->child = tempnode->child->sibling;
+				tail++;
+			}
+		}
 		else
 		{
-			if(parent.sibling == NULL)
+			printf("[-]");
+		}
+		printf("|");
+		//Checking if the Level contains anymore nodes or not
+		if(tempnode->sibling==NULL) 
+		{
+			tempnode2 = tempnode;
+			
+			if(tempnode2->sibling==NULL && tempnode2->parent==NULL) //FOR  ROOT
 			{
-				parent = *child;
-				child = parent.child;
-				sibling = parent.sibling;
 				printf("\n");
-				if(i<numNodes)
-					printf("L%d : ",++j);
+				Lchange=1;
 			}
 			else
 			{
-				parent = *sibling;
-				sibling = parent.sibling;
-				printf("|");
-			}	
-		}
-	}
+				while(tempnode2->sibling==NULL)
+				{
+					if(tempnode2->parent==NULL)
+						break;
 
+					tempnode2 = tempnode2->parent;
+				}
+				if(tempnode2->sibling==NULL && tempnode2->parent==NULL)
+				{
+					printf("\n");
+					Lchange=1;
+				}
+			}
+		}
+		head++;
+		tempnode = &bfsTreeArr[head];
+	}
+	printf("\n\n");
 	//*******************************************THE END
 }
