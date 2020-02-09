@@ -37,7 +37,7 @@ The BFS Tree is represented using the data structure as shown below
 
 struct bfsnode
 {
-	int node;
+	int node, level;
 	struct bfsnode *parent, *sibling, *child;
 };
 
@@ -86,7 +86,7 @@ void main(int argc, char *argv[])
 		printf("\n");
 	}
 
-	//------------------------------------------VISUALIZATION
+	//--------------------------------------------------------VISUALIZATION
 	FILE *graph;
 	graph = fopen("graph.dot","w");
 	if (graph==NULL)
@@ -130,25 +130,6 @@ void main(int argc, char *argv[])
 	printf("\n");
 	scanf("%d",&snode);
 
-	/*int *bfsArr = (int *)calloc(numNodes*numNodes,sizeof(int));
-	
-	printf("\nBFS as a adjacency list : \n");
-
-	for(i=0;i<numNodes;i++)
-	{
-		printf("%d ",i+1);
-		for(j=i+1;j<numNodes;j++)
-		{
-			if(adjArr[i*numNodes+j]==1 && visited[j]!=1)
-			{
-				bfsArr[i*numNodes+j] = 1;
-				visited[j]=1;
-				printf("-> %d",j+1);
-			}
-		}
-		printf("\n");
-	}*/
-
 	//-------------------------------------------------using QUEUE and Graphviz
 	FILE *bfstree;
 	bfstree = fopen("bfstree.dot","w");
@@ -166,16 +147,18 @@ void main(int argc, char *argv[])
 	printf("\n");
 	scanf("%d",&tnode);*/
 
-	int head=0,tail=0;
+	int head=0,tail=0,L=0;
 
 	struct bfsnode *bfsTreeArr = (struct bfsnode *)malloc(numNodes*sizeof(struct bfsnode));
 	int *visited = (int *)calloc(numNodes,sizeof(int));
 
 	bfsTreeArr[0].node = snode;
+	bfsTreeArr[0].level = L;
 	bfsTreeArr[0].parent = NULL;
 	bfsTreeArr[0].sibling = NULL;
 	bfsTreeArr[0].child = NULL;
 	tail++;
+	L++;
 
 	printf("Start Node : %d\n",bfsTreeArr[head].node);
 	visited[snode-1] = 1;
@@ -184,7 +167,7 @@ void main(int argc, char *argv[])
 
 	while(head!=tail || head<numNodes)
 	{
-		printf(" %d ",bfsTreeArr[head].node);
+		printf(" %d",bfsTreeArr[head].node);
 		for(i=0;i<numNodes;i++)
 		{
 			if(adjArr[(bfsTreeArr[head].node-1)*numNodes+i]==1 && !visited[i])
@@ -193,6 +176,7 @@ void main(int argc, char *argv[])
 					bfsTreeArr[head].child = &bfsTreeArr[tail];
 					
 				bfsTreeArr[tail].node = i+1;
+				bfsTreeArr[tail].level = L;
 				bfsTreeArr[tail].parent = &bfsTreeArr[head];
 				if(head != tail-1 && bfsTreeArr[tail-1].parent->node == bfsTreeArr[tail].parent->node)
 					bfsTreeArr[tail-1].sibling = &bfsTreeArr[tail];
@@ -205,7 +189,7 @@ void main(int argc, char *argv[])
 				fprintf(bfstree,"%d -> %d\n",bfsTreeArr[head].node,i+1);
 
 				visited[i] = 1;
-				printf("-> %d",i+1);
+				printf(" -> %d",i+1);
 			}
 			/*if(bfsTreeArr[tail-1].node == tnode)
 			{
@@ -215,6 +199,8 @@ void main(int argc, char *argv[])
 		}
 		fflush(stdout);
 		head++;
+		if(bfsTreeArr[head-1].level!=bfsTreeArr[head].level)
+			L++;
 		printf("\n");
 	}
 
@@ -225,80 +211,5 @@ void main(int argc, char *argv[])
 	sprintf(command,"dot bfstree.dot -Tpng -o bfstree.png");
 	system(command);
 
-	/*for(i=0;i<numNodes;i++)
-		printf("%d ",bfsTreeArr[i].node);*/
-
-
-	//-------------------------------------VISUALIZING IN TERMINAL
-	printf("\nPrinting BFS Tree\n\n");
-	printf(" '|' separates children of different nodes or denotes end of a LEVEL\n");
-	printf(" '[-]' denotes the parent node has no children \n\n");
-	//---------------------Initialization
-	
-	head = 0;
-	tail = 0;
-	int L = 0, Lchange = 1;
-	struct bfsnode *currNode,*tempnode,*tempnode2;
-
-	printf("L%d : ",L);
-	printf("-%d-\n",bfsTreeArr[head].node);
-	
-	tempnode = &bfsTreeArr[head];
-	//-------------------Loooooooooooooooooop
-	while(head < numNodes)
-	{
-		if(Lchange==1)
-		{
-			L++;
-			printf("L%d : ",L);
-			Lchange=0;
-		}
-		if(tempnode->child != NULL)
-		{
-			printf("-%d-",tempnode->child->node);
-			tail++;
-			while(tempnode->child->sibling!=NULL)
-			{	
-				printf("-%d-",tempnode->child->sibling->node);
-				if(tempnode->child->sibling!=NULL)
-					tempnode->child = tempnode->child->sibling;
-				tail++;
-			}
-		}
-		else
-		{
-			printf("[-]");
-		}
-		printf("|");
-		//Checking if the Level contains anymore nodes or not
-		if(tempnode->sibling==NULL) 
-		{
-			tempnode2 = tempnode;
-			
-			if(tempnode2->sibling==NULL && tempnode2->parent==NULL) //FOR  ROOT
-			{
-				printf("\n");
-				Lchange=1;
-			}
-			else
-			{
-				while(tempnode2->sibling==NULL)
-				{
-					if(tempnode2->parent==NULL)
-						break;
-
-					tempnode2 = tempnode2->parent;
-				}
-				if(tempnode2->sibling==NULL && tempnode2->parent==NULL)
-				{
-					printf("\n");
-					Lchange=1;
-				}
-			}
-		}
-		head++;
-		tempnode = &bfsTreeArr[head];
-	}
-	printf("\n\n");
 	//*******************************************THE END
 }
