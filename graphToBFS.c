@@ -123,7 +123,33 @@ void main(int argc, char *argv[])
 	#endif
 	
 	//-------------------------------------BUILDING BFS
-	//-------------------------------------------------using QUEUE
+
+	printf("Enter start node : \nOptions are :: ");
+	for(i=0;i<numNodes;i++)
+		printf("[%d] ",i+1);
+	printf("\n");
+	scanf("%d",&snode);
+
+	/*int *bfsArr = (int *)calloc(numNodes*numNodes,sizeof(int));
+	
+	printf("\nBFS as a adjacency list : \n");
+
+	for(i=0;i<numNodes;i++)
+	{
+		printf("%d ",i+1);
+		for(j=i+1;j<numNodes;j++)
+		{
+			if(adjArr[i*numNodes+j]==1 && visited[j]!=1)
+			{
+				bfsArr[i*numNodes+j] = 1;
+				visited[j]=1;
+				printf("-> %d",j+1);
+			}
+		}
+		printf("\n");
+	}*/
+
+	//-------------------------------------------------using QUEUE and Graphviz
 	FILE *bfstree;
 	bfstree = fopen("bfstree.dot","w");
 	if(bfstree==NULL)
@@ -134,21 +160,16 @@ void main(int argc, char *argv[])
 
 	fprintf(bfstree,"digraph {\n");
 
-	printf("Enter start node : \nOptions are :: ");
-	for(i=0;i<numNodes;i++)
-		printf("[%d] ",i+1);
-	printf("\n");
-	scanf("%d",&snode);
-
 	/*printf("Enter target node : \nOptions are :: ");
 	for(i=0;i<numNodes;i++)
 		printf("[%d] ",i+1);
 	printf("\n");
 	scanf("%d",&tnode);*/
 
-	int head=0,tail=0,v=0;
+	int head=0,tail=0;
 
 	struct bfsnode *bfsTreeArr = (struct bfsnode *)malloc(numNodes*sizeof(struct bfsnode));
+	int *visited = (int *)calloc(numNodes,sizeof(int));
 
 	bfsTreeArr[0].node = snode;
 	bfsTreeArr[0].parent = NULL;
@@ -157,39 +178,35 @@ void main(int argc, char *argv[])
 	tail++;
 
 	printf("Start Node : %d\n",bfsTreeArr[head].node);
+	visited[snode-1] = 1;
+
+	printf("BFS Tree Adjacency List : \n");
+
 	while(head!=tail || head<numNodes)
 	{
+		printf(" %d ",bfsTreeArr[head].node);
 		for(i=0;i<numNodes;i++)
 		{
-			if(adjArr[(bfsTreeArr[head].node-1)*numNodes+i]==1)
+			if(adjArr[(bfsTreeArr[head].node-1)*numNodes+i]==1 && !visited[i])
 			{
-				for(j=0;j<tail;j++)
-				{
-					if((i+1)==bfsTreeArr[j].node)
-					{
-						v = 1;
-						break;
-					}
-				}
-				if(v!=1)
-				{
-					if(bfsTreeArr[head].child==NULL)
-						bfsTreeArr[head].child = &bfsTreeArr[tail];
+				if(bfsTreeArr[head].child==NULL)
+					bfsTreeArr[head].child = &bfsTreeArr[tail];
 					
-					bfsTreeArr[tail].node = i+1;
-					bfsTreeArr[tail].parent = &bfsTreeArr[head];
-					if(head != tail-1 && bfsTreeArr[tail-1].parent->node == bfsTreeArr[tail].parent->node)
-						bfsTreeArr[tail-1].sibling = &bfsTreeArr[tail];
-					
-					bfsTreeArr[tail].sibling = NULL;
-					bfsTreeArr[tail].child = NULL;
-					
-					tail++;
+				bfsTreeArr[tail].node = i+1;
+				bfsTreeArr[tail].parent = &bfsTreeArr[head];
+				if(head != tail-1 && bfsTreeArr[tail-1].parent->node == bfsTreeArr[tail].parent->node)
+					bfsTreeArr[tail-1].sibling = &bfsTreeArr[tail];
+				
+				bfsTreeArr[tail].sibling = NULL;
+				bfsTreeArr[tail].child = NULL;
+				
+				tail++;
 
-					fprintf(bfstree,"%d -> %d\n",bfsTreeArr[head].node,i+1);
-				}
+				fprintf(bfstree,"%d -> %d\n",bfsTreeArr[head].node,i+1);
+
+				visited[i] = 1;
+				printf("-> %d",i+1);
 			}
-			v = 0;
 			/*if(bfsTreeArr[tail-1].node == tnode)
 			{
 				found = 1;
@@ -198,6 +215,7 @@ void main(int argc, char *argv[])
 		}
 		fflush(stdout);
 		head++;
+		printf("\n");
 	}
 
 	fprintf(bfstree,"}\n");
