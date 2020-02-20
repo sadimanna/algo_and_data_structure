@@ -120,6 +120,15 @@ void main(int argc, char *argv[])
 		}
 		visited[nodeQueue[head]-1]=1;
 		head++;
+		
+		if(head==tail && head < numNodes)
+		{
+			j = 0;
+			while(visited[j]!=0)
+				j++;
+			nodeQueue[tail] = j+1;
+			tail++;
+		}
 		/*for(j=0;j<numNodes;j++)
 			printf("%d ",nodeQueue[j]);
 		printf("\n");*/
