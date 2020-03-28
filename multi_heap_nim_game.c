@@ -315,6 +315,10 @@ void main()
 
 		
 	}
+	
+	for(j=0;j<i;j++)
+		printf("(%d, %d) ",moves_heaps[j]+1,moves[j]);
+	printf("\n");
 
 	if(win_user)
 		printf("YES\n");
