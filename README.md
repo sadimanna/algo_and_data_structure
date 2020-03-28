@@ -1,5 +1,7 @@
 # Data and File Structure
 
+All codes in the folder ***DataStructures***.
+
 For displaying images of the Trees or Heaps, a system call to a separate python file has been used, as I don't know how to display images in C.
 
 For generating the images of the graphs or trees, I have used Graphviz, whihch needs to be installed.
@@ -10,4 +12,8 @@ After installation add the **bin** folder to **PATH**.
 
 # Design and Analysis of Algorithms
 
-All the codes work in both Linux and Windows. All the codes are part of assignment of my coursework. I hope the problem statements are clear from the filenames. 
+All the codes in the folder ***Algorithms***.
+
+All the codes are part of assignment of my coursework.
+
+I hope the problem statements are clear from the filenames. 
