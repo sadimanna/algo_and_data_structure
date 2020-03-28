@@ -240,7 +240,7 @@ void main()
 
 	int max_moves = 0;
 	for(i=0;i<k;i++)
-		max_moves+=((N[i]/M[i])+1);
+		max_moves+=(M[i]+1);
 
 	int *moves_heaps = (int *)malloc(max_moves*sizeof(int));
 	int *moves = (int *)malloc(max_moves*sizeof(int));
@@ -305,18 +305,16 @@ void main()
 			printf("%d ",N[j]);
 		printf("\n");
 
+		for(j=0;j<i;j++)
+			printf("(%d, %d) ",moves_heaps[j]+1,moves[j]);
+		printf("\n");
+		
 		zero_flag = all_zero(N,k);
 		if(zero_flag==1)
 			break;
 
-		for(j=0;j<i;j++)
-			printf("(%d, %d) ",moves_heaps[j]+1,moves[j]);
-		printf("\n");
+		
 	}
-
-	for(j = 0;j<i;j++)
-		printf("(%d, %d) ",moves_heaps[j]+1,moves[j]);
-	printf("\n\n");
 
 	if(win_user)
 		printf("YES\n");
