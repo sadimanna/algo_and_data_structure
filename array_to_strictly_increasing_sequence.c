@@ -9,7 +9,7 @@ void main()
 	char c;
 
 	//READING THE SEQUENCE
-	//printf("Input : \n");
+	printf("Input : \n");
 	while(scanf("%c",&c))
 	{
 		//printf("Input read : %d\n",c);
@@ -35,10 +35,10 @@ void main()
 			break;
 	}
 
-	/*printf("Sequence : \n");
+	printf("\nSequence : \n");
 	for(i=0;i<num_inps;i++)
 		printf("%d ",seq[i]);
-	printf("\n");*/
+	printf("\n");
 
 	//FINDING THE LONGEST INCREASING SEQUENCE
 	int *longest_inc_seq = (int *)malloc(num_inps*sizeof(int));
@@ -57,12 +57,13 @@ void main()
 
 		longest_inc_seq[i] = longest_len;
 	}
-
-	//printf("%d\n",longest_len);
+	
+	printf("Length of longest increasing sequence : ");
+	printf("%d\n",longest_len);
 
 	//wE HAVE TO REPLACE THE REMAINING ELEMENTS BY INTERMEDIATE NUMBERS
-	//printf("Minimum number of integers that must be changed");
-	//printf("to make the input sequence strictly increasing : \n");
+	printf("Minimum number of integers that must be changed");
+	printf("to make the input sequence strictly increasing : \n");
 	printf("\n%d\n\n",num_inps-longest_len);
 
 }
