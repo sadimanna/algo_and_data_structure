@@ -13,7 +13,7 @@ int get_maxlen(int dec)
 	}
 	if(mult2>dec)
 		maxlen--;
-	//printf("\nFOR %d maximum number of bits required is %d\n",dec,maxlen);
+	
 	return maxlen;
 }
 
