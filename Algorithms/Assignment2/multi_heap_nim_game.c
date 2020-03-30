@@ -253,17 +253,17 @@ void main()
 		scanf("%d %d",&heap_index,&user_move);
 		if(user_move>M[heap_index-1])
 		{
-			printf("Invalid move. Enter Again.\n");
+			printf("Invalid move. Enter Only Move Again.\n");
 			scanf("%d",&user_move);
 		}
 		if(user_move==0)
 		{
-			printf("Invalid move. Enter Again.\n");
+			printf("Invalid move. Enter Only Move Again.\n");
 			scanf("%d",&user_move);
 		}
 		if(N[heap_index-1]==0)
 		{
-			printf("Invalid move. Size of heap %d is ZERO. Enter Again.\n",heap_index);
+			printf("Invalid move. Size of heap %d is ZERO. Enter Only Move Again.\n",heap_index);
 			scanf("%d %d",&heap_index,&user_move);
 		}
 		moves_heaps[i] = heap_index-1;
