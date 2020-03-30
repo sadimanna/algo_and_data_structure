@@ -120,6 +120,23 @@ int all_zero(int *N, int k)
 	return zero_flag;
 }
 
+int sprague_grundy_optimal_move(int n, int m)
+{
+	int opt_move = 0;
+
+	// COMPUTER IS IN P POSITION
+	//WHATEVER INPUT YOU GIVE
+	//USER WILL WIN
+	if(n % (m+1) == 0)
+		opt_move = m;
+	//N POSITION
+	//PUSH USER TO P POSITION
+	else
+		opt_move = n % (m+1);
+
+	return opt_move;
+}
+
 int *optimal_move(int *N, int *M, int k)
 {
 	int i,j;
@@ -162,30 +179,7 @@ int *optimal_move(int *N, int *M, int k)
 		opt_index = N_min_ind;
 		//IF NUMBER OF STONES IS GREATER THAN EVEN MULTIPLE OF MAX ALLOWABLE WITHDRAWAL
 		//BUT LESS THAN THE HIGHER ODD MULTIPLE
-		if((N[N_min_ind] / M[N_min_ind]) % 2 == 0)
-		{
-			//IF IT IS AN EXACT EVEN MULTIPLE
-			if((N[N_min_ind] % M[N_min_ind])==0)
-				//REMOVE HALF OF MAX ALLOWABLE STONES
-				opt_move = M[N_min_ind] / 2;
-			else
-				//REMOVE THAT MANY NUMBER OF STONES SO THAT 
-				//THE REMAINING STONES IS AN EXACT MULTIPLE
-				opt_move = N[N_min_ind] % M[N_min_ind];
-		}
-		//IF NUMBER OF STONES IS GREATER THAN ODD MULTIPLE OF MAX ALLOWABLE WITHDRAWAL
-		//BUT LESS THAN THE HIGHER EVEN MULTIPLE
-		if((N[N_min_ind] / M[N_min_ind]) % 2 != 0)
-		{
-			//IF IT IS AN EXACT MULTIPLE
-			if((N[N_min_ind] % M[N_min_ind])==0)
-				//REMOVE MAX ALLOWABLE NUMBER OF STONES
-				opt_move = M[N_min_ind];
-			else
-				//REMOVE THAT MANY NUMBER OF STONES
-				//THAT WOULD LEAVE 1 MORE THAN AN EXACT MULTIPLE
-				opt_move = N[N_min_ind] % M[N_min_ind] - 1;
-		}
+		opt_move = sprague_grundy_optimal_move(N[N_min_ind],M[N_min_ind]);
 		//IF STILL ZERO
 		//REMOVE MAX ALLOWABLE
 		if(opt_move==0)
@@ -211,7 +205,7 @@ int *optimal_move(int *N, int *M, int k)
 			if ((opt_move <= M[opt_index]) &&(opt_move > 0))
 				break;
 			else if (opt_move > M[opt_index])
-				opt_move = M[opt_index];
+				opt_move = sprague_grundy_optimal_move(N[opt_index],M[opt_index]);
 			else if (opt_move < 0)
 				opt_move = -opt_move;
 		}
