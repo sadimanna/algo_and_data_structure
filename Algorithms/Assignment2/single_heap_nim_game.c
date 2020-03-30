@@ -154,7 +154,7 @@ void main()
 			break;
 		}
 		//COMPUTER MOVE
-		comp_move = optimalMove(n,m);
+		comp_move = sprague_grundy_optimal_move(n,m);
 		
 		moves[i] = comp_move;
 		i++;
