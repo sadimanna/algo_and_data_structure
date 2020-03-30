@@ -51,52 +51,21 @@ int *dec2bin(int dec, int len)
 	return binstr;
 }
 
-int optimalMove(int n, int m)
+int sprague_grundy_optimal_move(int n, int m)
 {
-	int *bin_n;
-	bin_n = dec2bin(n,0);
-	int n_len = get_maxlen(n);
-	int leftmost_1 = 0;
-	int move_val = 1, final_move_val = 0, i, j=0;
+	int opt_move = 0;
 
-	for(i=0;i<n_len;i++)
-	{
-		if(bin_n[i]==1)
-			leftmost_1 = n_len - 1 - i;
-		
-		//CALCULATE THE MOVE VALUE
-		while(j<leftmost_1)
-		{
-			move_val*=2;
-			j++;
-		}
-		j = 0;
-		
-		//CHECK IF THE MOVE VALUE IS WITHIN THE LIMIT
-		if (move_val+final_move_val <= m)
-		{
-			//CHECK IF THE REDUCED n VALUE IS A MULTIPLE OF 2
-			if((n-(move_val+final_move_val))%2!=0)
-				final_move_val+=move_val;
-			else
-			{
-				return final_move_val+move_val;
-			}
-		}
-		move_val = 1;
-	}
+	// COMPUTER IS IN P POSITION
+	//WHATEVER INPUT YOU GIVE
+	//USER WILL WIN
+	if(n % (m+1) == 0)
+		opt_move = m;
+	//N POSITION
+	//PUSH USER TO P POSITION
+	else
+		opt_move = n % (m+1);
 
-	//EVEN AFTER ITERATION OVER ALL THE 1s IF THE FINAL MOVE VALUE
-	//DOES NOT REDUCE n TO A MULTIPLE OF 2, THEN SET IT TO 1
-	if(final_move_val!=0 && (n-final_move_val)%2!=0)
-		final_move_val = move_val;
-
-	//FINAL VALUE WILL NOT BE SET IF MOVE_VAL IS GREATER THN LIMIT
-	//HENCE SETTING IT TO 1
-	if (final_move_val==0)
-		return 1;
-
-	return final_move_val;
+	return opt_move;
 }
 
 void visualize(int *moves, int n, int m, int num_moves)
