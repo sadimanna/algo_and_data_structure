@@ -8,4 +8,6 @@ After entering USER move, pressing SPACE will accept the input. No need to press
 
 The format for input is (Heap Index,Move)
 
-After entering ")", input is accepted automatically. No need to press ENTER.
+Enter Heap Index. Then press "**,**". Then enter move. Then enter "**)**".
+
+After entering "**)**", input is accepted automatically. No need to press ENTER.
