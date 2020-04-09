@@ -293,10 +293,10 @@ void main()
 		//i++;
 		N[heap_index-1] = N[heap_index-1]-user_move;
 
-		/*printf("\nState after User Move : ");
+		printf("\nState after User Move : ");
 		for(j=0;j<k;j++)
-			printf("%d ",N[j]%(M[j]+1));
-		printf("\n");*/
+			printf("%d ",N[j]);
+		printf("\n");
 
 		zero_flag = all_zero(N,k);
 		if(zero_flag==1)
@@ -316,10 +316,10 @@ void main()
 
 		N[comp_move_index] = N[comp_move_index] - comp_move;
 
-		/*printf("\nState after Comp Move : ");
+		printf("\nState after Comp Move : ");
 		for(j=0;j<k;j++)
-			printf("%d ",N[j]%(M[j]+1));
-		printf("\n");*/
+			printf("%d ",N[j]);
+		printf("\n");
 		
 		/*for(j=0;j<i;j++)
 			printf("(%d, %d) ",moves_heaps[j]+1,moves[j]);
