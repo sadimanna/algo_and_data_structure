@@ -24,7 +24,6 @@ int LIS(int *seq, int arrlen)
 				if(longest_inc_seq[j]+1 > longest_inc_seq[i])
 				{
 					smallest_elem_of_lis[i] = smallest_elem_of_lis[j];
-					//seolis_ind = j;
 					longest_inc_seq[i] = longest_inc_seq[j]+1;
 				}
 			}
